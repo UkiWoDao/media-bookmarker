@@ -4,6 +4,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser'); // middleware to process POST requests
 const mongoose = require('mongoose');
+const path = require('path');
 
 // initialize app
 const app = express();
@@ -30,8 +31,11 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 // bodyParser middleware
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+// enable custom css/js
+app.use(express.static('public'));
 
 // index page
 app.get('/', (req, res) => {
@@ -54,7 +58,7 @@ app.delete('/list:id', (req, res) => {
     // Media.findOneAndDelete({_id: req.params.id})
     Media.findByIdAndRemove({_id: req.params.id});
     console.log('Success!')
-})
+});
 
 // about page
 app.get('/about', (req, res) => {

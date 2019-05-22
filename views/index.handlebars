@@ -7,9 +7,14 @@
             <div class="form-group form-inline mt-5">
                 <label class="mr-2" for="title">Title</label>
                 <input class="form-control mr-sm-2 w-50" type="text" name="title" id="title" required>
-                <label class="mr-2" for="title">Type</label>
-                <input class="form-control mr-sm-2 w-20" type="text" name="type" id="title" required>
-                <button id="submit" type="submit" class="btn ml-sm-3 btn-primary">ADD</button>
+                    <div class="radio" required>
+                        <input type="radio" name="type" class="" value="Film"> Film
+                        <input type="radio" name="type" class="" value="TV Show"> TV show
+                        <input type="radio" name="type" class="" value="Game"> Game
+                        <input type="radio" name="type" class="" value="Music"> Music
+                        <input type="radio" name="type" class="" value="Book"> Book
+                        <button id="submit" type="submit" class="btn ml-sm-3 btn-primary">ADD</button>
+                    </div>          
             </div>
         </form>
     </div>
