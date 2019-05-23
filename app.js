@@ -1,3 +1,5 @@
+// make list items selectable: when selected entry reveals action buttons
+
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser'); // middleware to process POST requests
@@ -17,7 +19,7 @@ mongoose.connect('mongodb://localhost:27017/watchlistdb', {
     .then(() => console.log('MongoDB connected...'))
     .catch(err => console.log(err));
 
-// load movie model
+// load media model
 require('./models/Media');
 const Media = mongoose.model('media');
 
@@ -46,6 +48,13 @@ app.get('/list', (req, res) => {
             });
         });
 });
+
+// remove list entries from db
+app.delete('/list:id', (req, res) => {
+    // Media.findOneAndDelete({_id: req.params.id})
+    Media.findByIdAndRemove({_id: req.params.id});
+    console.log('Success!')
+})
 
 // about page
 app.get('/about', (req, res) => {
