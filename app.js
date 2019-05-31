@@ -1,10 +1,8 @@
-// make list items selectable: when selected entry reveals action buttons
-
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser'); // middleware to process POST requests
 const mongoose = require('mongoose');
-const path = require('path');
+// const path = require('path');
 
 // initialize app
 const app = express();
@@ -56,8 +54,8 @@ app.get('/list', (req, res) => {
 // remove list entries from db
 app.delete('/list:id', (req, res) => {
     // Media.findOneAndDelete({_id: req.params.id})
-    Media.findByIdAndRemove({_id: req.params.id});
-    console.log('Success!')
+    // Media.findByIdAndRemove({_id: req.params.id});
+    console.log(req.params.id + 'Success!')
 });
 
 // about page
@@ -70,12 +68,12 @@ app.post('/list', (req, res) => {
     console.log(req.body);
     let errors = [];
 
-    if(!req.body.title){
-        errors.push({text:'Add a title'});
-    }
-    if(!req.body.type){
-        errors.push({text:'Select a type'});
-    }
+    // if(!req.body.title){
+    //     errors.push({text:'Add a title'});
+    // }
+    // if(!req.body.type){
+    //     errors.push({text:'Select a type'});
+    // }
 
     if(errors.length > 0){
         res.render('/', {
@@ -84,12 +82,16 @@ app.post('/list', (req, res) => {
             type: req.body.type
         });
     } else {
-        const newUser = {
-            title: req.body.title,
-            type: req.body.type
-        }
-        new Media(newUser)
-            .save()
+        // load index / clear form
+        res.render('index');
+
+    // for later user authentication
+    //     const newUser = {
+    //         title: req.body.title,
+    //         type: req.body.type
+    //     }
+    //     new Media(newUser)
+    //         .save()
     }
 });
 
