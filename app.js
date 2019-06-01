@@ -1,11 +1,12 @@
-const express = require('express');
-const exphbs = require('express-handlebars');
-const bodyParser = require('body-parser'); // middleware to process POST requests
-const mongoose = require('mongoose');
-// const path = require('path');
+const express = require('express'),
+      exphbs = require('express-handlebars'),
+      bodyParser = require('body-parser'), // middleware to process POST requests
+      mongoose = require('mongoose'),
+      methodOverr = require('method-override'),
+//    path = require('path');
 
 // initialize app
-const app = express();
+      app = express();
 
 // map global promise
 mongoose.Promise = global.Promise;
@@ -32,6 +33,9 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// methodOverride middleware
+app.use(methodOverr('_method'));
+
 // enable custom css/js
 app.use(express.static('public'));
 
@@ -51,19 +55,23 @@ app.get('/list', (req, res) => {
         });
 });
 
-// remove list entries from db
-app.delete('/list:id', (req, res) => {
+app.delete('/list/:id', (req, res) => {
     // Media.findOneAndDelete({_id: req.params.id})
-    // Media.findByIdAndRemove({_id: req.params.id});
-    console.log(req.params.id + 'Success!')
+    Media.deleteOne({_id: req.params.id})
+        .then(() => {
+            res.redirect('/list');
+        });
+    console.log(req.params.id + ' Success!')
 });
 
-// about page
-app.get('/about', (req, res) => {
-    res.render('about');
-});
+// remove list entries from db
+// app.delete('/list/:id', (req, res) => {
+//     Media.findOneAndDelete({_id: req.params.id})
+//     // Media.findByIdAndRemove({_id: req.params.id});
+//     console.log(req.params.id + 'Success!')
+// });
 
-// proces form
+// process form
 app.post('/list', (req, res) => {
     console.log(req.body);
     let errors = [];
@@ -93,6 +101,11 @@ app.post('/list', (req, res) => {
     //     new Media(newUser)
     //         .save()
     }
+});
+
+// about page
+app.get('/about', (req, res) => {
+    res.render('about');
 });
 
 // port on localhost

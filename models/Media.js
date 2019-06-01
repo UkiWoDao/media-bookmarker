@@ -16,7 +16,7 @@ const MediaSchema = new Schema({
         default: false,
         type: Boolean,
         required: true
-    }
+    },
 });
 
 mongoose.model('media', MediaSchema);

@@ -15,6 +15,6 @@ Once you have node and npm installed, install the dependencies by navigating to 
 npm install
 ```
 
-This will install body-parser, express, express-handlebars and mongoose packages
+This will install body-parser, express, express-handlebars, mongoose and method-override packages
 
 Feel free to play around with it.
