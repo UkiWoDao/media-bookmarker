@@ -55,21 +55,13 @@ app.get('/list', (req, res) => {
         });
 });
 
+// remove list entries from db
 app.delete('/list/:id', (req, res) => {
-    // Media.findOneAndDelete({_id: req.params.id})
     Media.deleteOne({_id: req.params.id})
         .then(() => {
             res.redirect('/list');
         });
-    console.log(req.params.id + ' Success!')
 });
-
-// remove list entries from db
-// app.delete('/list/:id', (req, res) => {
-//     Media.findOneAndDelete({_id: req.params.id})
-//     // Media.findByIdAndRemove({_id: req.params.id});
-//     console.log(req.params.id + 'Success!')
-// });
 
 // process form
 app.post('/list', (req, res) => {
@@ -90,6 +82,7 @@ app.post('/list', (req, res) => {
             type: req.body.type
         });
     } else {
+        new Media(req.body).save();
         // load index / clear form
         res.render('index');
 
