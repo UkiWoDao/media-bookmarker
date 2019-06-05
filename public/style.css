@@ -11,7 +11,7 @@ button {
     display: flex;
 }
 
-i {
+form i {
     position: absolute;
     left: -2px;
     bottom: 3px;
