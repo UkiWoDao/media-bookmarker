@@ -8,7 +8,6 @@ const MediaSchema = new Schema({
         required: true
     },
     type:{
-        // FIX: find way to get radio input
         type: String,
         required: true
     },
