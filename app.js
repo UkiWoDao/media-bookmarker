@@ -19,6 +19,9 @@ mongoose.connect('mongodb://localhost:27017/watchlistdb', {
     .then(() => console.log('MongoDB connected...'))
     .catch(err => console.log(err));
 
+// 
+mongoose.set('useFindAndModify', false);
+
 // load media model
 require('./models/Media');
 const Media = mongoose.model('media');
@@ -63,17 +66,47 @@ app.delete('/list/:id', (req, res) => {
         });
 });
 
+// star/update list entry
+app.put('/list/:id', (req, res) => {
+    // console.log(req.params);
+    // if(req.params.favourite == false){
+    //     Media.findOneAndUpdate({_id: req.params.id}, {$set: {"favourite": true}})
+    //         .then(() => {
+    //             res.redirect('/list')
+    //         });
+    // } else {
+    //     Media.findOneAndUpdate({_id: req.params.id}, {$set: {"favourite": false}})
+    //         .then(() => {
+    //             res.redirect('/list')
+    //         });
+    // }
+    Media.findOne({
+        _id: req.params.id
+    })
+        .then(media => {
+            if(media.favourite == false){
+                media.favourite = true;
+            }else{
+                media.favourite = false;
+            }
+        media.save()
+            .then(() => {
+                res.redirect('/list');
+            })
+        });
+});
+
 // process form
 app.post('/list', (req, res) => {
     console.log(req.body);
     let errors = [];
 
-    // if(!req.body.title){
-    //     errors.push({text:'Add a title'});
-    // }
-    // if(!req.body.type){
-    //     errors.push({text:'Select a type'});
-    // }
+    if(!req.body.title){
+        errors.push({text:'Add a title'});
+    }
+    if(!req.body.type){
+        errors.push({text:'Select a type'});
+    }
 
     if(errors.length > 0){
         res.render('/', {
