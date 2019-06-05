@@ -13,12 +13,16 @@
                 <td style="width: 50%">{{title}}</td>
                 <td style="width: 30%">{{type}}</td>
                 <td style="width: 20%">
-                    <form method="post" action="/list/{{id}}?_method=DELETE">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="submit" value="Delete">
-                        {{!-- <a href="/list/{{id}}"><i class="fas fa-trash mr-sm-2 delete"></i></a> --}}
-                        {{!-- <a href="#"><i class="fas fa-star mr-sm-2"></i></a> --}}
-                    </form>
+                    <div class="flex">
+                        <form class="mr-1" method="post" action="/list/{{id}}?_method=DELETE">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" value="Delete"><i class="fas fa-trash mr-sm-2 delete"></i></button>
+                        </form>
+                        <form method="post" action="/list/{{id}}?_method=PUT">
+                            <input type="hidden" name="_method" value="PUT">
+                            <button type="submit" value="Update"><i class="fas fa-star mr-sm-2"></i></button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         </tbody>

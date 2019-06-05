@@ -1,2 +1,18 @@
 /* custom style goes here */
 /* IDEA: make list items selectable: when selected entry reveals action buttons */
+
+button {
+    border: 0;
+    background: none;
+    position: relative;
+}
+
+.flex {
+    display: flex;
+}
+
+i {
+    position: absolute;
+    left: -2px;
+    bottom: 3px;
+}
