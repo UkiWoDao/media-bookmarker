@@ -1,13 +1,14 @@
 <table class="table">
     <thead class="thead-light">
         <tr>
-            <th style="width: 50vw">Title</th>
-            <th style="width: 30vw">Type</th>
-            <th style="width: 20vw">Action</th>
+            <th style="width: 50%">Title</th>
+            <th style="width: 30%">Type</th>
+            <th style="width: 20%">Action</th>
         </tr> 
     </thead>
-    {{#each media}}
-    <table class="table">
+
+{{#each media}}
+    <table class="table table-hover">
         <tbody id="list">
             <tr>
                 <td style="width: 50%">{{title}}</td>
@@ -16,11 +17,15 @@
                     <div class="flex">
                         <form class="mr-1" method="post" action="/list/{{id}}?_method=DELETE">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" value="Delete"><i class="fas fa-trash mr-sm-2 delete"></i></button>
+                            <button id="trash" type="submit" value="Delete"><i class="fas fa-trash mr-sm-2 delete"></i></button>
                         </form>
-                        <form method="post" action="/list/{{id}}?_method=PUT">
+                        <form method="post"action="/list/{{id}}?_method=PUT">
                             <input type="hidden" name="_method" value="PUT">
-                            <button type="submit" value="Update"><i class="fas fa-star mr-sm-2"></i></button>
+                            {{#if favourite}}
+                                <button type="submit" value="Update"><i class="fas fa-star mr-sm-2 active"></i></button>
+                            {{else}}
+                                <button type="submit" value="Update"><i class="fas fa-star mr-sm-2"></i></button>
+                            {{/if}} 
                         </form>
                     </div>
                 </td>
@@ -28,6 +33,6 @@
         </tbody>
     </table>
 </table>
-    {{else}}
-        <p>No entries in database</p>
-    {{/each}}
+{{else}}
+    <p>No entries in database</p>
+{{/each}}
