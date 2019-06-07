@@ -2,8 +2,8 @@ const express = require('express'),
       exphbs = require('express-handlebars'),
       bodyParser = require('body-parser'), // middleware to process POST requests
       mongoose = require('mongoose'),
-      methodOverr = require('method-override'),
-//    path = require('path');
+      methodOverr = require('method-override'), // to override GET and POST methods
+   // path = require('path');
 
 // initialize app
       app = express();
@@ -68,22 +68,10 @@ app.delete('/list/:id', (req, res) => {
 
 // star/update list entry
 app.put('/list/:id', (req, res) => {
-    // console.log(req.params);
-    // if(req.params.favourite == false){
-    //     Media.findOneAndUpdate({_id: req.params.id}, {$set: {"favourite": true}})
-    //         .then(() => {
-    //             res.redirect('/list')
-    //         });
-    // } else {
-    //     Media.findOneAndUpdate({_id: req.params.id}, {$set: {"favourite": false}})
-    //         .then(() => {
-    //             res.redirect('/list')
-    //         });
-    // }
     Media.findOne({
         _id: req.params.id
     })
-        .then(media => {
+        .then (media => {
             if(media.favourite == false){
                 media.favourite = true;
             }else{
@@ -99,6 +87,7 @@ app.put('/list/:id', (req, res) => {
 // process form
 app.post('/list', (req, res) => {
     console.log(req.body);
+    // server side validation
     let errors = [];
 
     if(!req.body.title){
